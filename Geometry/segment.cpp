@@ -27,3 +27,10 @@ template<typename T> complex<double> findIntersection(segment<T> s, segment<T> t
 	double det = a1 * b2 - a2 * b1;
 	return complex<T>((b2 * c1 - b1 * c2) / det, (a1 * c2 - a2 * c1) / det);
 }
+
+template<typename T> long double segmentPointDist(segment<T> s, complex<T> p){
+	long double dist = min(abs(p-s.p), abs(p-s.q));
+	if(dot(s.p-s.q, p-s.q) > 0 && dot(s.q-s.p, p-s.p) > 0)
+		dist = min(dist, abs(cross(s.p-s.q, p - s.q))/abs(s.p-s.q));
+	return dist;
+}

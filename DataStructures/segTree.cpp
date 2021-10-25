@@ -1,9 +1,13 @@
 struct node{
 	ll sum = 0;
-	node(): sz(0){}
+	node(): sum(0){}
 	node(ll sum): sum(sum){}
 	friend node operator+(const node& lhs, const node& rhs){
 		return node(lhs.sum + rhs.sum);
+	}
+	node& operator+=(const node& rhs){
+		sum += rhs.sum;
+		return *this;
 	}
 };
 
@@ -16,7 +20,7 @@ template<typename T> struct segmentTree{
 		for(int i = n-1; i; i--) t[i] = t[i<<1] + t[i<<1|1];
 	};
 	void update(int p, T val){
-		for(t[p += n] = val; p>>=1;) t[p] = t[p<<1] + t[p<<1|1]; 
+		for(t[p += n] += val; p>>=1;) t[p] = t[p<<1] + t[p<<1|1]; 
 	}
 	T query(int l, int r){
 		T lhs, rhs;
